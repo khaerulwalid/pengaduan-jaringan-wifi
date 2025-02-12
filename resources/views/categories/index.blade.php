@@ -21,30 +21,36 @@
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200 text-sm">
-                    @php $no = $categories->firstItem(); @endphp
-                    @foreach ($categories as $category)
-                        <tr class="hover:bg-gray-100 transition">
-                            <td class="p-2">{{ $no++ }}</td>
-                            <td class="p-2 font-semibold text-gray-700">{{ $category->name }}</td>
-                            <td class="p-2 text-gray-600">{{ $category->description }}</td>
-                            <td class="p-2 flex justify-center space-x-2">
-                                <a href="{{ route('categories.edit', $category->id) }}"
-                                    class="bg-yellow-500 text-white px-3 py-1 text-xs rounded hover:bg-yellow-600 transition shadow">
-                                    Edit
-                                </a>
-
-                                <form action="{{ route('categories.destroy', $category->id) }}" method="POST"
-                                    onsubmit="return confirm('Are you sure?')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit"
-                                        class="bg-red-600 text-white px-3 py-1 text-xs rounded hover:bg-red-700 transition shadow cursor-pointer">
-                                        Delete
-                                    </button>
-                                </form>
-                            </td>
+                    @if ($tickets->isEmpty())
+                        <tr>
+                            <td colspan="5" class="text-center text-gray-500 py-4">Tidak ada data pelanggan.</td>
                         </tr>
-                    @endforeach
+                    @else
+                        @php $no = $categories->firstItem(); @endphp
+                        @foreach ($categories as $category)
+                            <tr class="hover:bg-gray-100 transition">
+                                <td class="p-2">{{ $no++ }}</td>
+                                <td class="p-2 font-semibold text-gray-700">{{ $category->name }}</td>
+                                <td class="p-2 text-gray-600">{{ $category->description }}</td>
+                                <td class="p-2 flex justify-center space-x-2">
+                                    <a href="{{ route('categories.edit', $category->id) }}"
+                                        class="bg-yellow-500 text-white px-3 py-1 text-xs rounded hover:bg-yellow-600 transition shadow">
+                                        Edit
+                                    </a>
+
+                                    <form action="{{ route('categories.destroy', $category->id) }}" method="POST"
+                                        onsubmit="return confirm('Are you sure?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit"
+                                            class="bg-red-600 text-white px-3 py-1 text-xs rounded hover:bg-red-700 transition shadow cursor-pointer">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+                    @endif
                 </tbody>
             </table>
         </div>

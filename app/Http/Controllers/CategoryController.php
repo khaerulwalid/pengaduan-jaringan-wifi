@@ -15,6 +15,13 @@ class CategoryController extends Controller
     public function __construct(CategoryService $categoryService)
     {
         $this->categoryService = $categoryService;
+
+        $this->middleware(function ($request, $next) {
+            if (auth()->user()->role === 'customer') {
+                abort(403, 'Unauthorized action.');
+            }
+            return $next($request);
+        });
     }
 
     // Menampilkan daftar kategori
@@ -27,7 +34,8 @@ class CategoryController extends Controller
     // Menampilkan form tambah kategori
     public function create()
     {
-        return view('categories.create');
+        $categories = $this->categoryService->getAllCategories();
+        return view('tickets.create', compact('categories'));
     }
 
     // Menyimpan kategori baru

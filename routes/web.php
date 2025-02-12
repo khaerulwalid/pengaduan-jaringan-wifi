@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SLAController;
+use App\Http\Controllers\TicketController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,6 +50,14 @@ Route::middleware(['auth'])->group(function() {
     Route::get('/sla/{sla}/edit', [SLAController::class, 'edit'])->name('sla.edit');
     Route::put('/sla/{sla}', [SLAController::class, 'update'])->name('sla.update');
     Route::delete('/sla/{sla}', [SLAController::class, 'destroy'])->name('sla.destroy');
+
+    Route::get('/tickets', [TicketController::class, 'index'])->name('tickets.index');
+    Route::get('/tickets/create', [TicketController::class, 'create'])->name('tickets.create');
+    Route::post('/tickets', [TicketController::class, 'store'])->name('tickets.store');
+    // Tambahkan edit dan delete
+    Route::get('/tickets/{id}/edit', [TicketController::class, 'edit'])->name('tickets.edit');
+    Route::put('/tickets/{id}', [TicketController::class, 'update'])->name('tickets.update');
+    Route::delete('/tickets/{id}', [TicketController::class, 'destroy'])->name('tickets.destroy');
 });
 
 

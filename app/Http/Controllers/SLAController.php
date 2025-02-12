@@ -14,6 +14,13 @@ class SLAController extends Controller
     public function __construct(SLAService $slaService)
     {
         $this->slaService = $slaService;
+
+        $this->middleware(function ($request, $next) {
+            if (auth()->user()->role === 'customer') {
+                abort(403, 'Unauthorized action.');
+            }
+            return $next($request);
+        });
     }
 
     // Menampilkan daftar SLA

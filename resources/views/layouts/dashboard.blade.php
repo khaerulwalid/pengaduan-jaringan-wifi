@@ -28,10 +28,22 @@
         <div class="w-64 h-full bg-blue-800 text-white fixed top-16 -mt-1">
             <ul class="space-y-2 p-4">
                 <li><a href="{{ route('dashboard') }}" class="hover:bg-blue-700 p-2 block">Dashboard</a></li>
-                <li><a href="#" class="hover:bg-blue-700 p-2 block">Users</a></li>
-                <li><a href="{{ route('categories.index') }}" class="hover:bg-blue-700 p-2 block">Categories</a></li>
-                <li><a href="{{ route('sla.index') }}" class="hover:bg-blue-700 p-2 block">SLA Management</a></li>
-                <li><a href="#" class="hover:bg-blue-700 p-2 block">Settings</a></li>
+
+
+                @if (auth()->user()->role == 'admin')
+                    <li><a href="#" class="hover:bg-blue-700 p-2 block">Users</a></li>
+                    <li><a href="{{ route('categories.index') }}" class="hover:bg-blue-700 p-2 block">Categories</a>
+                    </li>
+                    <li><a href="{{ route('sla.index') }}" class="hover:bg-blue-700 p-2 block">SLA Management</a></li>
+                    <li><a href="#" class="hover:bg-blue-700 p-2 block">Settings</a></li>
+                @elseif(auth()->user()->role == 'customer')
+                    <li><a href="{{ route('tickets.index') }}" class="hover:bg-blue-700 p-2 block">Pengaduan</a></li>
+                @elseif(auth()->user()->role == 'cs')
+                    <li><a href="" class="hover:bg-blue-700 p-2 block">Manage Tickets</a>
+                    </li>
+                @elseif(auth()->user()->role == 'teknisi')
+                    <li><a href="" class="hover:bg-blue-700 p-2 block">Task List</a></li>
+                @endif
             </ul>
         </div>
 
