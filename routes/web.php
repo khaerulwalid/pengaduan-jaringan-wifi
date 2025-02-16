@@ -7,6 +7,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SLAController;
 use App\Http\Controllers\TicketController;
+use App\Http\Controllers\CSTicketController;
+use App\Http\Controllers\TechnicianController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,6 +60,25 @@ Route::middleware(['auth'])->group(function() {
     Route::get('/tickets/{id}/edit', [TicketController::class, 'edit'])->name('tickets.edit');
     Route::put('/tickets/{id}', [TicketController::class, 'update'])->name('tickets.update');
     Route::delete('/tickets/{id}', [TicketController::class, 'destroy'])->name('tickets.destroy');
+
+    // Route khusus untuk CS
+    Route::middleware(['role:cs'])->group(function () {
+        Route::get('/cs/tickets', [CSTicketController::class, 'index'])->name('cs.tickets.index');
+        Route::get('/cs/tickets/{id}', [CSTicketController::class, 'show'])->name('cs.tickets.show');
+        // Route untuk mengupdate priority dan assigned_to
+        Route::get('/cs/tickets/{id}/edit', [CSTicketController::class, 'edit'])->name('cs.tickets.edit');
+        Route::put('/cs/tickets/{id}', [CSTicketController::class, 'update'])->name('cs.tickets.update');
+        Route::put('/cs/tickets/{id}/status', [CSTicketController::class, 'updateStatus'])->name('cs.tickets.updateStatus');
+
+    });
+
+    // Tambahkan route untuk teknisi
+    Route::middleware(['auth', 'role:technician'])->group(function() {
+        Route::get('/technician/tickets', [TechnicianController::class, 'index'])->name('technician.tickets.index');
+
+        // Route untuk halaman edit pengaduan
+        Route::get('/technician/tickets/{ticket}/edit', [TechnicianController::class, 'edit'])->name('technician.tickets.edit');
+    });
 });
 
 

@@ -16,14 +16,12 @@
                     <tr class="bg-blue-600 text-white text-sm">
                         <th class="p-2 text-left">ID</th>
                         <th class="p-2 text-left">Ticket Number</th>
-                        <th class="p-2 text-left">Customer ID</th>
                         <th class="p-2 text-left">Category ID</th>
                         <th class="p-2 text-left">Description</th>
                         <th class="p-2 text-left">Status</th>
                         <th class="p-2 text-left">Priority</th>
                         <th class="p-2 text-left">Assigned To</th>
                         <th class="p-2 text-left">Created At</th>
-                        <th class="p-2 text-center">Actions</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200 text-sm">
@@ -37,29 +35,13 @@
                             <tr class="hover:bg-gray-100 transition">
                                 <td class="p-2">{{ $no++ }}</td>
                                 <td class="p-2 font-semibold text-gray-700">{{ $ticket->ticket_number }}</td>
-                                <td class="p-2 text-gray-600">{{ $ticket->ticket_id }}</td>
                                 <td class="p-2 text-gray-600">{{ $ticket->category_id }}</td>
                                 <td class="p-2 text-gray-600">{{ $ticket->description }}</td>
                                 <td class="p-2 text-gray-600">{{ $ticket->status }}</td>
                                 <td class="p-2 text-gray-600">{{ $ticket->priority }}</td>
                                 <td class="p-2 text-gray-600">{{ $ticket->assigned_to ?? 'Unassigned' }}</td>
                                 <td class="p-2 text-gray-600">{{ $ticket->created_at }}</td>
-                                <td class="p-2 flex justify-center space-x-2">
-                                    <a href="{{ route('tickets.edit', $ticket->id) }}"
-                                        class="bg-yellow-500 text-white px-3 py-1 text-xs rounded hover:bg-yellow-600 transition shadow">
-                                        Edit
-                                    </a>
 
-                                    <form action="{{ route('tickets.destroy', $ticket->id) }}" method="POST"
-                                        onsubmit="return confirm('Are you sure?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit"
-                                            class="bg-red-600 text-white px-3 py-1 text-xs rounded hover:bg-red-700 transition shadow cursor-pointer">
-                                            Delete
-                                        </button>
-                                    </form>
-                                </td>
                             </tr>
                         @endforeach
                     @endif

@@ -21,7 +21,7 @@
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200 text-sm">
-                    @if ($tickets->isEmpty())
+                    @if ($categories->isEmpty())
                         <tr>
                             <td colspan="5" class="text-center text-gray-500 py-4">Tidak ada data pelanggan.</td>
                         </tr>

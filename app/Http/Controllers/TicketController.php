@@ -43,7 +43,12 @@ class TicketController extends Controller
     // Menyimpan tiket baru
     public function store(CreateTicketRequest $request)
     {
-        $result = $this->ticketService->createTicket($request->validated());
+        
+        $validatedData = $request->validated();
+        $validatedData['customer_id'] = auth()->id(); // Ambil ID user yang login
+        // Debug data yang dikirim
+        
+        $result = $this->ticketService->createTicket($validatedData);
 
         if (isset($result['error'])) {
             return redirect()->back()->withErrors($result['error'])->withInput();

@@ -27,18 +27,22 @@ class TicketService
     public function createTicket(array $data)
     {
         $validator = Validator::make($data, [
-            'ticket_number' => 'required|unique:tickets|max:50',
-            'customer_id'   => 'required|exists:customers,id',
             'category_id'   => 'required|exists:categories,id',
+            'title'         => 'required|unique:tickets|max:50',
             'description'   => 'required',
-            'status'        => 'required|in:pending,in_progress,resolved,closed',
-            'priority'      => 'required|in:low,medium,high,critical',
+            'latitude'    => 'nullable|numeric|between:-90,90',
+            'longitude'   => 'nullable|numeric|between:-180,180',
         ]);
-
+    
         if ($validator->fails()) {
             return ['error' => $validator->errors()];
         }
-
+    
+        // Generate ticket_number secara otomatis
+        $randomString = substr(str_shuffle('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz123456789'), 0, 10);
+        $ticketNumber = 'T-' . $randomString;
+        $data['ticket_number'] = $ticketNumber;
+    
         return ['ticket' => $this->ticketRepository->create($data)];
     }
 

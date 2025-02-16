@@ -46,6 +46,22 @@
                 @enderror
             </div>
 
+            <div class="mb-3 text-[8px]">
+                <label for="latitude" class="block font-medium">Latitude</label>
+                <input type="text" class="form-control" id="latitude" name="latitude" value="{{ old('latitude') }}">
+            </div>
+
+            <div class="mb-3 text-[8px]">
+                <label for="longitude" class="block font-medium">Longitude</label>
+                <input type="text" class="form-control" id="longitude" name="longitude" value="{{ old('longitude') }}">
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700">Pilih Lokasi</label>
+                <div id="map" class="w-full h-64 rounded-md border border-gray-300 shadow-sm"></div>
+            </div>
+
+
             <!-- Tombol Simpan & Batal -->
             <div class="flex space-x-2">
                 <button type="submit"

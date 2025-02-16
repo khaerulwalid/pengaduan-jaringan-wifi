@@ -11,7 +11,7 @@ class CreateTicketRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return auth()->user()->role !== 'customer';
+        return true;
     }
 
     /**
@@ -20,12 +20,11 @@ class CreateTicketRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'ticket_number' => 'required|unique:tickets|max:50',
-            'customer_id'   => 'required|exists:customers,id',
-            'category_id'   => 'required|exists:categories,id',
+            'category_id'   => 'required|exists:categories,id', 
+            'title'         => 'required|string|max:255',
             'description'   => 'required|min:10',
-            'status'        => 'required|in:pending,in_progress,resolved,closed',
-            'priority'      => 'required|in:low,medium,high,critical',
+            'latitude'      => 'required|numeric|between:-90,90',
+            'longitude'     => 'required|numeric|between:-180,180',
         ];
     }
 
@@ -35,19 +34,17 @@ class CreateTicketRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'ticket_number.required' => 'Nomor tiket wajib diisi.',
-            'ticket_number.unique' => 'Nomor tiket ini sudah digunakan.',
-            'ticket_number.max' => 'Nomor tiket tidak boleh lebih dari 50 karakter.',
-            'customer_id.required' => 'Customer wajib dipilih.',
-            'customer_id.exists' => 'Customer tidak ditemukan.',
-            'category_id.required' => 'Kategori wajib dipilih.',
-            'category_id.exists' => 'Kategori tidak ditemukan.',
+            'category_id.required' => 'Kategori tiket wajib dipilih.',
+            'category_id.exists' => 'Kategori yang dipilih tidak valid.',
+            'title.required' => 'Judul tiket wajib diisi.',
+            'title.string' => 'Judul tiket harus berupa teks.',
+            'title.max' => 'Judul tiket tidak boleh lebih dari 255 karakter.',
             'description.required' => 'Deskripsi tiket wajib diisi.',
             'description.min' => 'Deskripsi tiket minimal 10 karakter.',
-            'status.required' => 'Status tiket wajib diisi.',
-            'status.in' => 'Status harus salah satu dari: pending, in_progress, resolved, atau closed.',
-            'priority.required' => 'Prioritas wajib diisi.',
-            'priority.in' => 'Prioritas harus salah satu dari: low, medium, high, atau critical.',
+            'latitude.numeric' => 'Latitude harus berupa angka.',
+            'latitude.between' => 'Latitude harus berada di antara -90 dan 90.',
+            'longitude.numeric' => 'Longitude harus berupa angka.',
+            'longitude.between' => 'Longitude harus berada di antara -180 dan 180.',
         ];
     }
 }

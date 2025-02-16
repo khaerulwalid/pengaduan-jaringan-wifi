@@ -23,7 +23,15 @@ class TicketRepository
 
     public function create(array $data)
     {
-        return Ticket::create($data);
+        return Ticket::create([
+            'category_id'   => $data['category_id'],
+            'title' => $data['title'],
+            'ticket_number' => $data['ticket_number'],
+            'customer_id'   => $data['customer_id'],
+            'description'   => $data['description'],
+            'latitude'      => $data['latitude'] ?? null,
+            'longitude'     => $data['longitude'] ?? null,
+        ]);
     }
 
     public function update($id, array $data)

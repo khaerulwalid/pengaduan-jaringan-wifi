@@ -12,6 +12,7 @@ class Ticket extends Model
     protected $table = 'tickets'; // Pastikan nama tabel benar
 
     protected $fillable = [
+        'title',
         'ticket_number',
         'customer_id',
         'category_id',
@@ -20,6 +21,8 @@ class Ticket extends Model
         'priority',
         'created_by',
         'updated_by',
+        'latitude',
+        'longitude',
     ];
 
     protected $casts = [
@@ -28,9 +31,15 @@ class Ticket extends Model
     ];
 
     // Relasi ke Customer
-    public function customer()
+    // public function customer()
+    // {
+    //     return $this->belongsTo(User::class, 'customer_id');
+    // }
+
+    // Relasi ke tabel SLA
+    public function sla()
     {
-        return $this->belongsTo(Customer::class, 'customer_id');
+        return $this->belongsTo(Sla::class, 'sla_id');
     }
 
     // Relasi ke Category
@@ -39,15 +48,19 @@ class Ticket extends Model
         return $this->belongsTo(Category::class, 'category_id');
     }
 
-    // // Relasi ke User (Pembuat Tiket)
-    // public function createdBy()
-    // {
-    //     return $this->belongsTo(User::class, 'created_by');
-    // }
+    // Relasi ke User (Pembuat Tiket)
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class, 'customer_id');
+    }
 
-    // // Relasi ke User (Updater Tiket)
-    // public function updatedBy()
-    // {
-    //     return $this->belongsTo(User::class, 'updated_by');
-    // }
+    public function assignedTo()
+    {
+        return $this->belongsTo(User::class, 'assigned_to');
+    }
+
+    public function priority()
+    {
+        return $this->belongsTo(SLA::class, 'sla_id');
+    }
 }
